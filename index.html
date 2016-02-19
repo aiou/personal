@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>trial-application</title>
+	<link rel="stylesheet" href="css/index.css">
+</head>
+<style>
+html{
+	width: 100%;
+	height: 100%;
+	}
+body{
+	width: 100%;
+	height: 100%;
+	background: url(image/bodybcg.png) no-repeat 0px 0px;
+	background-size: 100%;
+}
+</style>
+<body>
+	<div class="content">
+	<div class="title">
+		<img src="image/title.png" alt="">
+	</div>
+	<div class="login trials">
+		<!-- <p class="users">
+			<img src="image/trial01.png" alt="">
+			<input type="text"id="userName" placeholder="请输入登录账号" class="user"></p>
+		<p class="passwords">
+			<img src="image/trial02.png" alt="">
+			<input type="text"id="userPassWord" placeholder="请输入登录密码" class="password"></p> -->
+		<div class="department">
+			<img src="image/trial03.png" alt="">
+			<input type="text"id="userDepartment" placeholder="请输入机构名称" class="userDepartments">
+			<div class="divs1">请填写机构名称</div>
+		</div>	
+		<div class="connect-name">
+			<img src="image/trial04.png" alt="">
+			<input type="text"id="userConnectName" placeholder="请输入联系人姓名" class="userConnectNames">
+			<div class="divs2">请填写联系人姓名</div>
+		</div>
+		
+		<div class="email">
+			<img src="image/trial06.png" alt="">
+			<input type="text"id="userEmail" placeholder="请输入联系邮箱" class="userEmails">
+			<div class="divs3"></div>
+		</div>
+		<div class="phone">
+			<img src="image/trial05.png" alt="">
+			<input type="text"id="userPhone" placeholder="请输入手机号码" maxlength="11" class="userPhones">
+		<div class="divs4"></div>	
+		</div>
+		<div class="phone-codes">
+			<img src="image/trial05.png" alt="">
+			<input type="text"id="codeStr" placeholder="请输入手机验证码" class="code">
+		<input id="btnSendCode" type="button" value="获取验证码" onclick="sendMessage()"> 
+		<div class="divs5">验证码不能为空！</div>	
+		</div>
+		<div><input type="submit" id="SubmitBt"class="submit" value="提交试用申请"></div>
+		<div id="TipArea"></div>
+	</div>
+
+</div>
+<div class="bcg">
+</div>
+<div class="bcg-content">
+		<div class="chabox"><img src="image/index.png" alt=""><img src="image/cha.png" alt="" class="cha"></div>
+		<div class="index-box">
+		<div>会议室号码：<span class="index-phone"></span></div>
+		<div>主持人密码：<span class="compere-password"></span></div>
+		<div>参会人密码：<span class="participants-password"></span></div>
+		<div>容纳人数：<span class="totals"></span></div>
+		<div>会议有效期：<span class="index-time"></span></div>
+	</div>
+		<div class="register-email">*注册信息已发送至您的邮箱</div>
+		<div class="register-email">*该会议室在一分钟之后生效</div>
+		<div class="goin"><a href="https://meeting.cloudp.cc">进入试用</a></div>
+
+
+	</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

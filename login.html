@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>start-meeting</title>
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/jquery.min.js"></script>
+	<script src="js/login.js"></script>
+
+</head>
+<style>
+	html{
+	width: 100%;
+	height: 100%;
+	}
+	body{
+	width: 100%;
+	height: 100%;
+	background: url(image/bodybcg.png) no-repeat 0px 0px;
+	background-size: 100%;
+}
+</style>
+<body>
+<div class="content">
+	<div class="title">
+		<img src="image/title.png" alt="">
+	</div>
+	<div class="login">
+		<form action="">
+		<div class="users">
+			<img src="image/user.png">
+			<input type="text"id="userName" placeholder="请输入用户名" class="user">
+		<div class="errors"></div>
+		</div>
+		
+		<div class="passwords">
+			<img src="image/password.png">
+			<input type="text"id="userPassWord" placeholder="密码" class="password">
+			<div class="errors"></div>
+		</div>
+		
+		<div class="codes">
+			<img src="image/code.png">
+			<input type="text"id="codeStr" placeholder="请输入验证码" class="code">
+			<span class="code-span"></span>
+			<div class="errors"></div>
+		</div>
+		<p>
+			<input type="submit" class="submit"style="margin-top:0px;" value="登录"</p>
+			<span class="submit-error"></span>
+		
+	</form>
+		<p style="text-align:center;">如我有会议邀请，请点击</p>
+		<p><a href="" class="add" >受邀加入</a></p>
+		
+	</div>
+</div>
+
+</body>
+</html>                                     
