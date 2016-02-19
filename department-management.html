@@ -4,8 +4,12 @@
 	<meta charset="UTF-8">
 	<title>department-management</title>
 	<link rel="stylesheet" href="css/index.css">
+	<link rel="stylesheet" href="css/demo.css">
+	<link rel="stylesheet" href="css/zTreeStyle.css">
 	<script src="js/jquery.min.js"></script>
 	<script src="js/comment.js"></script>
+	<script src='js/jquery.ztree.core-3.5.js'></script>
+
 </head>
 <style>
 		html{
@@ -72,6 +76,8 @@
 		<div class="box-right">
 		<div class="right-title">部门管理</div>
 		<div class="new-department">新建部门</div>
+		<ul id="treeDemo" class="ztree"></ul>
+		<div></div>
 		</div>
 	</div>
 <script>
@@ -136,6 +142,30 @@ $.ajax({
   success:function(data){
     $(".userss").html(data.data)
     console.log(data)
+  }
+})
+var setting = {
+			data: {
+				simpleData: {
+					enable: true,
+					idKey:'id',
+					pIdKey:'parentId',
+					rootPId:null,
+				},
+				key:{
+					name:"departName"
+				}
+			}
+		};
+$.ajax({
+	 type:"get",
+  url:'https://api-test.cloudp.cc:443/cloudpServer/v1/orgs/'+admin_id+'/depts?token='+admin_token,
+  dataType:'json',
+  success:function(data){
+  	var zNodes=data.data;
+   $(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
   }
 })
 </script>
