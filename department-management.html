@@ -144,7 +144,6 @@ $.ajax({
   dataType:'json',
   success:function(data){
     $(".userss").html(data.data)
-    console.log(data)
   }
 })
 $.ajax({
@@ -165,7 +164,8 @@ $.ajax({
 				showRemoveBtn: true,
 				showRenameBtn: true,
 				removeTitle:'删除',
-				renameTigile:"重命名",
+				renameTitle:"重命名",
+				addmoreTitle:"添加子节点",
 
 			},
 			data: {
@@ -212,20 +212,16 @@ $.ajax({
 				url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+treeNode.departName,
 				dataType:'json',
 				success:function(data){
-						var parentid=data.data.parentId
-						console.log(data)
-						console.log(data.data)
-						console.log(data.data[0].id)
-						alert(parentid)
-			// $.ajax({
-			// 	type:'delete',
-			// 	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+newid+'?token='+admin_token&'dept_id='+newid+'&org_id='+admin_id,
-			// 	dataType:'json',
-			// 	success:function(){
-			// 		alert(1)
-			// 		showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.departName);
-			// 	}
-			// })
+					console.log(data)
+						var parentid=data.data[0].id;
+			$.ajax({
+				type:'delete',
+				url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/{org_id}/depts/{dept_id}?token='+admin_token+'&dept_id='+parentid+'&org_id='+admin_id,
+				dataType:'json',
+				success:function(){
+					showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.departName);
+				}
+			})
 					
 					
 				}
@@ -243,9 +239,28 @@ $.ajax({
 			}
 			return true;
 		}
+
 		function onRename(e, treeId, treeNode, isCancel) {
-			alert(1)
-			showLog((isCancel ? "<span style='color:red'>":"") + "[ "+getTime()+" onRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.name + (isCancel ? "</span>":""));
+			$.ajax({
+				type:"get",
+				dataType:"json",
+				url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+treeNode.id+'?token='+admin_token,
+				success:function(data){
+					var parentidss=data.data.parentId;
+					$.ajax({
+						type:'put',
+						url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+treeNode.id+'?token='+admin_token+'&parentId='+parentidss+'&departName='+treeNode.departName,
+						dataType:'json',
+						success:function(){
+							showLog((isCancel ? "<span style='color:red'>":"") + "[ "+getTime()+" onRename ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.departName + (isCancel ? "</span>":""));
+						}
+					})
+
+				}
+			})
+					
+				
+			
 		}
 		function showRemoveBtn(treeId, treeNode) {
 			return !treeNode.isFirstNode;

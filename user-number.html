@@ -90,16 +90,16 @@
 							<li>操作</li>
 						</ul>
 				</div>
-				<div>
+				<!-- <div>
 					<ul class="li-head">
-							<li>1212</li>
-							<li>122</li>
-							<li>15454</li>
-							<li>15456</li>
-							<li>465465</li>
-							<li>545</li>
+							<li class="accountnum">1212</li>
+							<li class="accountalias">122</li>
+							<li class="displayname">15454</li>
+							<li class="username">15456</li>
+							<li class="useremail">465465</li>
+							<li class="description"><img src="image/bianji.png" alt=""></li>
 						</ul>
-				</div>
+				</div> -->
 			</div>
 		</div>
 	</div>
@@ -167,6 +167,30 @@ $.ajax({
     $(".userss").html(data.data)
     console.log(data)
   }
+})
+$.ajax({
+	type:"get",
+	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token,
+	dataType:'json',
+	success:function(data){
+		console.log(data)
+		var datas=data.data
+		for (i=0;i<datas.length; i++){
+		var	html=''
+		 	html+='<div>';
+			html+='<ul class="li-head">'
+			html+='<li class="accountnum">'+datas[i].accountNum+'</li>';
+			html+='<li class="accountalias">'+datas[i].accountAlias+'</li>';
+			html+='<li class="displayname">'+datas[i].displayName+'</li>';
+			html+='<li class="username">'+datas[i].userName+'</li>';
+			html+='<li class="useremail">'+datas[i].userTel+'</li>';
+			html+='<li class="description"><img src="image/bianji.png" alt=""></li>';
+			html+='</ul>';
+			html+='</div>';
+			$(".content-box").append(html);
+		};
+		
+	}
 })
 </script>
 </body>
