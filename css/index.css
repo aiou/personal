@@ -479,3 +479,57 @@ input::-moz-focus-inner {
 /*input:focus{
 	outline: none;
 }*/
+/* user-number*/
+.right-about{
+	position: absolute;
+	right: 5px;
+}
+.right-about-span{
+	display: inline-block;
+	margin-right: 5px;
+
+}
+.right-about input{
+	width: 100px;
+}
+.span-about{
+	display: inline-block;
+	width: 60px;
+	height: 30px;
+	line-height: 30px;
+	padding-right: 15px;
+	color: #fff;
+	background: #31a3dd;
+
+}
+.user-content{
+	padding:10px;
+	height: 545px;
+	
+}
+.content-box{
+	height: 100%;
+	width: 100%;
+}
+.content-box div{
+	height: 40px;
+	line-height: 40px;
+	padding-left: 30px;
+	padding-right: 30px;
+}
+.li-heads li,.li-head li{
+	float: left;
+	font-family: "微软雅黑";
+	font-size: 13px;
+	width: 60px;
+	text-align: center;
+	width: 146px;
+	
+}
+.li-head{
+	overflow: hidden;
+}
+.content-box div:first-child{
+	background:#31a3dd; 
+	color: #fff;
+};
