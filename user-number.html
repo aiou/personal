@@ -90,8 +90,18 @@
 							<li>操作</li>
 						</ul>
 				</div>
-				<!-- <div>
-					<ul class="li-head">
+				<div class="content-boxes"></div>
+				<div class="pages">
+						<span>第<span class="current-page"></span>页</span>
+						<span>共<span class="page-count"></span>页</span>
+						<span id="firstPage">首页</span>
+						<span id="prev">上一页</span>
+						<span id="next">下一页</span>
+						<span id="lastPage">最后一页</span>
+						<input type="text" class="page-num">
+						<span id="page-jump">跳转</span>
+	            </div>
+			<!-- 		<ul class="li-head">
 							<li class="accountnum">1212</li>
 							<li class="accountalias">122</li>
 							<li class="displayname">15454</li>
@@ -102,7 +112,40 @@
 				</div> -->
 			</div>
 		</div>
+
 	</div>
+</div>
+<div class="bcgs"></div>
+	<div class="forms">
+		<div class="editors">编辑账号</div>
+		<div class="form-box">
+			<div>
+				<span>账号名称</span>
+				<span class="lefts">15151555</span>
+				<span>注册名称</span>
+				<span class="lefts">156165</span>
+			</div>
+			<div>
+				<span class="add-bgc">账号名称</span>
+				<input type="text" placeholder="请输入账号名称">
+			</div>
+			<div>
+				<span class="add-bgc">注册密码</span>
+				<input type="password" placeholder=" 请输入密码">
+			</div>
+			<div>
+				<span class="add-bgc">所属机构</span>
+				<span class="lefts">111</span>
+				<span class="add-bgcs">部门</span>
+				<input type="slect" class="department-input">
+			</div>
+			<div style="position:relative">
+				<span class="bottom-span">账号描述</span>
+				<textarea name="" id="" cols="30" rows="10" placeholder=" 请输入描述信息，300字以内" class="description-input"></textarea>
+			</div>
+		</div>
+	
+</div>
 <script>
 	//获取location参数
 function GetRequest() {
@@ -168,30 +211,128 @@ $.ajax({
     console.log(data)
   }
 })
-$.ajax({
-	type:"get",
-	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token,
-	dataType:'json',
-	success:function(data){
-		console.log(data)
-		var datas=data.data
-		for (i=0;i<datas.length; i++){
-		var	html=''
-		 	html+='<div>';
-			html+='<ul class="li-head">'
-			html+='<li class="accountnum">'+datas[i].accountNum+'</li>';
-			html+='<li class="accountalias">'+datas[i].accountAlias+'</li>';
-			html+='<li class="displayname">'+datas[i].displayName+'</li>';
-			html+='<li class="username">'+datas[i].userName+'</li>';
-			html+='<li class="useremail">'+datas[i].userTel+'</li>';
-			html+='<li class="description"><img src="image/bianji.png" alt=""></li>';
-			html+='</ul>';
-			html+='</div>';
-			$(".content-box").append(html);
-		};
+// $.ajax({
+// 	type:"get",
+// 	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token,
+// 	dataType:'json',
+// 	success:function(data){
+// 		console.log(data)
+// 		var datas=data.data
+// 		for (i=0;i<datas.length; i++){
+// 		var	html=''
+// 		 	html+='<div>';
+// 			html+='<ul class="li-head">'
+// 			html+='<li class="accountnum">'+datas[i].accountNum+'</li>';
+// 			html+='<li class="accountalias">'+datas[i].accountAlias+'</li>';
+// 			html+='<li class="displayname">'+datas[i].displayName+'</li>';
+// 			html+='<li class="username">'+datas[i].userName+'</li>';
+// 			html+='<li class="useremail">'+datas[i].userTel+'</li>';
+// 			html+='<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>';
+// 			html+='</ul>';
+// 			html+='</div>';
+// 			$(".content-box").append(html);
+// 		};
 		
-	}
-})
+// 	}
+// })
+function getJSONData(pn) {  
+    //alert(pn)
+    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users-count?token='+admin_token,function(data){
+    	var totalCount=data.data.count;// 总记录数
+    
+    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) {   
+        var pageSize = 10; // 每页显示几条记录  
+        var pageTotal = Math.ceil(totalCount / pageSize); // 总页数  
+        var startPage = pageSize * (pn - 1);  
+        var endPage = startPage + pageSize - 1;  
+        var $ul = $(".content-boxes");  
+        $ul.empty();  
+        for (var i = 0; i < pageSize; i++) {  
+            $ul.append('<ul class="li-head"></ul>');  
+        }  
+        var dataRoot = data.data;  
+        if (pageTotal == 1) {     // 当只有一页时  
+            for (var j = 0; j < totalCount; j++) {  
+                $(".li-head").eq(j)
+                .append('<li class="accountnum">'+dataRoot[j].accountNum+'</li>')  
+                .append('<li class="accountalias">'+dataRoot[j].accountAlias+'</li>') 
+                .append('<li class="displayname">'+dataRoot[j].displayName+'</li>')  
+                .append('<li class="username">'+dataRoot[j].userName+'</li>')  
+                .append('<li class="useremail">'+dataRoot[j].userTel+'</li>')  
+                .append('<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>')             
+            }  
+        } else {  
+            for (var j = startPage, k = 0; j < endPage, k < pageSize; j++, k++) {  
+                if( j == totalCount){  
+                    break;       // 当遍历到最后一条记录时，跳出循环  
+                }  
+                $(".li-head").eq(k)
+                 .append('<li class="accountnum">'+dataRoot[j].accountNum+'</li>')  
+                .append('<li class="accountalias">'+dataRoot[j].accountAlias+'</li>') 
+                .append('<li class="displayname">'+dataRoot[j].displayName+'</li>')  
+                .append('<li class="username">'+dataRoot[j].userName+'</li>')  
+                .append('<li class="useremail">'+dataRoot[j].userTel+'</li>')  
+                .append('<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>')
+            }  
+        }  
+        $(".page-count").text(pageTotal);  
+    })  
+  })
+}  
+function getPage() {  
+    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users-count?token='+admin_token, function(data) {  
+                pn = 1;  
+                var totalCount = data.data.count; // 总记录数  
+                var pageSize = 10; // 每页显示几条记录  
+                var pageTotal = Math.ceil(totalCount / pageSize); // 总页数  
+                $("#next").click(function() {  
+                            if (pn == pageTotal) {  
+                                alert("后面没有了");  
+                                pn = pageTotal;  
+                            } else {  
+                                pn++;  
+                                gotoPage(pn);  
+                            }  
+                        });  
+                $("#prev").click(function() {  
+                            if (pn == 1) {  
+                                alert("前面没有了");  
+                                pn = 1;  
+                            } else {  
+                                pn--;  
+                                gotoPage(pn);  
+                            }  
+                        })  
+                $("#firstPage").click(function() {  
+                            pn = 1;  
+                            gotoPage(pn);  
+                        });  
+                $("#lastPage").click(function() {  
+                            pn = pageTotal;  
+                            gotoPage(pn);  
+                        });  
+                $("#page-jump").click(function(){  
+                    if($(".page-num").val()  <= pageTotal && $(".page-num").val() != ''){  
+                        pn = $(".page-num").val();  
+                        gotoPage(pn);  
+                    }else{  
+                        alert("您输入的页码有误！");  
+                        $(".page-num").val('').focus();  
+                    }  
+                })  
+                $("#firstPage").trigger("click");  
+                  
+            })  
+}  
+function gotoPage(pn) {  
+    // alert(pn);  
+    $(".current-page").text(pn);  
+    getJSONData(pn)  
+}  
+  
+$(function() {  
+    getPage();  
+})  
 </script>
 </body>
-</html>
+</html> 

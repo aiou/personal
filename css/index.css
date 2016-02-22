@@ -505,6 +505,7 @@ input::-moz-focus-inner {
 .user-content{
 	padding:10px;
 	height: 545px;
+	position:relative;
 	
 }
 .content-box{
@@ -533,3 +534,99 @@ input::-moz-focus-inner {
 	background:#31a3dd; 
 	color: #fff;
 };
+.li-head .sursors{
+	cursor: pointer;
+}
+.bcgs{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #253b52;
+    opacity:0.5;
+    display: none;
+
+}
+.forms{
+	width: 350px;
+    padding: 10px 20px;
+    z-index: 999;
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    margin-left: -180px;
+    background: #fff;
+    height: 400px;
+    margin-top: -200px;
+    font-size: 13px;
+    font-family: " 微软雅黑";
+    display: none;
+}
+.editors{
+	text-align: center;
+	border-bottom: 1px solid black;
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+}
+.form-box{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.form-box span{
+	display: inline-block;
+	width: 76px;
+	text-align: center;
+
+}
+.form-box div{
+	margin-top: 25px;
+}
+.description-input{
+	width: 200px;
+	height: 150px;
+	position: absolute;
+	right: 43px;
+}
+.department-input{
+	width: 50px;
+}
+.forms .lefts{
+	text-align: left;
+	color:#f8c398; 
+}
+.add-bgc{
+	background: url(../image/xing.png) no-repeat 0px 2px;
+}
+.form-box .add-bgcs{
+	width: 38px;
+	text-align: inherit;
+	text-indent: 10px;
+	background: url(../image/xing.png) no-repeat 0px 2px;
+}
+.bottom-span{
+	position: absolute;
+
+}
+.pages{
+	position: absolute;
+	bottom: 30px;
+	width: 550px;
+	left:50%;
+	margin-left: -260px;
+	font-family: "微软雅黑";
+	font-size: 13px;
+}
+.current-page,.page-count{
+	color: #f8c398
+}
+#firstPage,#prev,#next,#page-jump,#lastPage{
+	cursor: pointer;
+}
+.page-num{
+	width: 30px;
+}
+.description img{
+	cursor: pointer;
+}
