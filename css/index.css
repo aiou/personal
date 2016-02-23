@@ -585,16 +585,19 @@ input::-moz-focus-inner {
 }
 .description-input{
 	width: 200px;
-	height: 150px;
+	height: 115px;
 	position: absolute;
 	right: 43px;
 }
 .department-input{
-	width: 50px;
+	
 }
-.forms .lefts{
+.forms .lefts,.forms .lefts-department,.forms .lefts-right{
 	text-align: left;
 	color:#f8c398; 
+}
+.lefts-right{
+	width: 50px;
 }
 .add-bgc{
 	background: url(../image/xing.png) no-repeat 0px 2px;
@@ -628,5 +631,33 @@ input::-moz-focus-inner {
 	width: 30px;
 }
 .description img{
+	cursor: pointer;
+}
+.true{
+	position: relative;
+	top: 135px;
+	display: inline-block;
+	background: #31a3dd;
+	border-radius: 8px;
+	width: 100px;
+	height: 20px;
+	color: #fff;
+	font-family: "微软雅黑";
+	line-height: 20px;
+	left: 84px;
+	cursor: pointer;
+}
+.cancel{
+	position: relative;
+	top: 135px;
+	right: -127px;
+	display: inline-block;
+	background: #31a3dd;
+	border-radius: 8px;
+	width: 100px;
+	height: 20px;
+	color: #fff;
+	font-family: "微软雅黑";
+	line-height: 20px;
 	cursor: pointer;
 }

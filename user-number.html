@@ -80,7 +80,7 @@
 		</div> -->
 		<div class="user-content">
 			<div class="content-box">
-				<div>
+				<div class="ceshi">
 					<ul class="li-heads">
 							<li>账号名称</li>
 							<li>账号别名</li>
@@ -120,33 +120,39 @@
 		<div class="editors">编辑账号</div>
 		<div class="form-box">
 			<div>
-				<span>账号名称</span>
+				<span>账号别名</span>
 				<span class="lefts">15151555</span>
-				<span>注册名称</span>
-				<span class="lefts">156165</span>
+				<span>昵称</span>
+				<input class="lefts-right">
 			</div>
 			<div>
 				<span class="add-bgc">账号名称</span>
-				<input type="text" placeholder="请输入账号名称">
+				<input type="text" placeholder="请输入账号名称" class="editor-user">
 			</div>
 			<div>
 				<span class="add-bgc">注册密码</span>
-				<input type="password" placeholder=" 请输入密码">
+				<input type="password" placeholder=" 请输入密码" class="editor-password">
 			</div>
 			<div>
 				<span class="add-bgc">所属机构</span>
-				<span class="lefts">111</span>
+				<span class="lefts-department">111</span>
 				<span class="add-bgcs">部门</span>
-				<input type="slect" class="department-input">
+				<select name="" id=""class="department-input"></select>
+				
 			</div>
 			<div style="position:relative">
 				<span class="bottom-span">账号描述</span>
 				<textarea name="" id="" cols="30" rows="10" placeholder=" 请输入描述信息，300字以内" class="description-input"></textarea>
+				<span class="true">确定</span>
+				<span class="cancel">取消</span>
 			</div>
+				
 		</div>
 	
 </div>
+
 <script>
+
 	//获取location参数
 function GetRequest() {
 
@@ -261,6 +267,7 @@ function getJSONData(pn) {
                 .append('<li class="useremail">'+dataRoot[j].userTel+'</li>')  
                 .append('<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>')             
             }  
+           // $(".sursors") 
         } else {  
             for (var j = startPage, k = 0; j < endPage, k < pageSize; j++, k++) {  
                 if( j == totalCount){  
@@ -275,7 +282,134 @@ function getJSONData(pn) {
                 .append('<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>')
             }  
         }  
-        $(".page-count").text(pageTotal);  
+        $(".page-count").text(pageTotal); 
+       if (pageTotal == 1){
+
+        var pagelength=$(".sursors").length;
+          $('.sursors').click(function(){
+          		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts?token='+admin_token,function(data){
+       		var departmentcount=data.data.length
+       		for (var i = 0; i <departmentcount; i++) {
+       			html='';
+       			html+='<option value="">'+data.data[i].departName+'</option>'
+       		};
+       		$('.department-input').append(html)
+       	})
+          	var i=$(this).parent().parent().index();
+          	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) { 
+          	 	var  userid=data.data[i].id;
+          	 	var  dId=data.data[i].departId;
+          	 	console.log(userid)
+          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token,function(data){
+          	 		var aA=data.data.accountAlias;
+          	 		var dN=data.data.displayName;
+          	 		var uN=data.data.userName;
+          	 		var pw=data.data.password;
+          	 		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'?token='+admin_token,function(data){
+          	 			var names=data.data.name
+          	 			$(".lefts").html(aA)
+	          	 		$(".lefts-right").val(dN)
+	          	 		$(".editor-user").val(uN)
+	          	 		$(".editor-password").val(pw)
+	          	 		$(".lefts-department").html(names)
+          	 		})
+          	 	})
+          	 	      $(".true").click(function(){
+ //          	 	var data={
+	// 	org_id:admin_id,
+	// 	user_id:userid,
+	// 	deptId:dId,
+	// 	token:admin_token,
+	// 	displayName:$(".lefts-right").val(),
+	// 	userName:$(".editor-user").val(),
+	// 	description:$(".description-input").val(),
+	// }
+	var disn=$(".lefts-right").val();
+	var usen=$(".editor-user").val();
+	var dest=$(".description-input").val()
+	$.ajax({
+		type:"put",
+		dataType:"json",
+		url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&userEmail=1111111&userTel=11111111&description='+dest,
+
+		success:function(data){
+			alert('编辑成功')
+			$(".bcgs").hide();
+			$(".forms").hide();
+			location.reload() ;
+		   }
+	})
+          	 })
+          	 $('.bcgs').show();
+             $(".forms").show(); 
+          })
+         
+        })
+}
+       else{
+       		$('.sursors').click(function(){
+       			//获取部门的select
+       				$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts?token='+admin_token,function(data){
+       		var departmentcount=data.data.length
+       		for (var i = 0; i <departmentcount; i++) {
+       			html='';
+       			html+='<option value="">'+data.data[i].departName+'</option>'
+       		};
+       		console.log(html)
+       		$('.department-input').append(html)
+       	})
+          	var pagecount=($(".current-page").html()-1)*10;
+          	var i=$(this).parent().parent().index()+pagecount;
+          	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) { 
+          	 	var  userid=data.data[i].id;
+          	 	var  dId=data.data[i].departId;
+          	 	console.log(userid)
+          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token,function(data){
+          	 		var aA=data.data.accountAlias;
+          	 		var dN=data.data.displayName;
+          	 		var uN=data.data.userName;
+          	 		var pw=data.data.password;
+          	 		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'?token='+admin_token,function(data){
+          	 			var names=data.data.name
+          	 			$(".lefts").html(aA)
+	          	 		$(".lefts-right").val(dN)
+	          	 		$(".editor-user").val(uN)
+	          	 		$(".editor-password").val(pw)
+	          	 		$(".lefts-department").html(names)
+          	 		})
+          	 	})
+          	 	
+          	 $(".true").click(function(){
+ //          	 	var data={
+	// 	org_id:admin_id,
+	// 	user_id:userid,
+	// 	deptId:dId,
+	// 	token:admin_token,
+	// 	displayName:$(".lefts-right").val(),
+	// 	userName:$(".editor-user").val(),
+	// 	description:$(".description-input").val(),
+	// }
+	var disn=$(".lefts-right").val();
+	var usen=$(".editor-user").val();
+	var dest=$(".description-input").val()
+	$.ajax({
+		type:"put",
+		dataType:"json",
+		url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&userEmail=1111111&userTel=11111111&description='+dest,
+
+		success:function(data){
+			alert('编辑成功')
+			$(".bcgs").hide();
+			$(".forms").hide();
+			location.reload() ;
+		   }
+	})
+          	 })	
+          	 })
+          	 $('.bcgs').show();
+             $(".forms").show(); 
+          })
+       }
     })  
   })
 }  
@@ -329,10 +463,41 @@ function gotoPage(pn) {
     $(".current-page").text(pn);  
     getJSONData(pn)  
 }  
-  
+function clicks(){
+	$(".cancel").click(function(){
+		$(".bcgs").hide();
+		$(".forms").hide()
+		location.reload();
+	})
+} 
+// function sureclick(){
+// 	$(".true").click(function(){
+// 		alert(userid)
+	// var data={
+	// 	org_id:admin_id,
+	// 	user_id:userid,
+	// 	deptId:dId,
+	// 	token:admin_token,
+	// 	displayName:$(".lefts-right").val(),
+	// 	userName:$(".editor-user").val(),
+	// 	description:$(".description-input").val(),
+	// }
+	// $.ajax({
+	// 	type:"put",
+	// 	dataType:"json",
+	// 	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+$(".lefts-right").val()+'&userName='+$(".editor-user").val()+'&description='+$(".description-input").val(),
+	// 	success:function(data){
+	// 		console.log(1)
+	// 		$(".bcgs").hide();
+	// 	}
+	// })
+// 	})
+// }
+
 $(function() {  
     getPage();  
+    clicks()
 })  
 </script>
 </body>
-</html> 
+</html>
