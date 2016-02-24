@@ -134,7 +134,7 @@ for (var i = 0; i<a; i++) {
 			location.href='user-number.html?name='+admin_token+'&id='+admin_id;
 		}
 		else if($(this).hasClass('a6')){
-			location.href='change-password.html?name='+admin_token+'&id='+admin_id;
+			location.href='device-management.html?name='+admin_token+'&id='+admin_id;
 		}
 	})
 }
@@ -207,16 +207,16 @@ $.ajax({
 			return confirm("确认删除 节点 -- " + treeNode.departName + " 吗？");
 		}
 		function onRemove(e, treeId, treeNode) {
-			$.ajax({
-				type:"put",
-				url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+treeNode.departName,
-				dataType:'json',
-				success:function(data){
-					console.log(data)
-						var parentid=data.data[0].id;
+			// $.ajax({
+			// 	type:"get",
+			// 	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+treeNode.departName,
+			// 	dataType:'json',
+			// 	success:function(data){
+			// 		console.log(data)
+			// 			var parentid=data.data[0].id;
 			$.ajax({
 				type:'delete',
-				url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/{org_id}/depts/{dept_id}?token='+admin_token+'&dept_id='+parentid+'&org_id='+admin_id,
+				url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/{org_id}/depts/{dept_id}?token='+admin_token+'&dept_id='+treeNode.id+'&org_id='+admin_id,
 				dataType:'json',
 				success:function(){
 					showLog("[ "+getTime()+" onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; " + treeNode.departName);
@@ -224,8 +224,8 @@ $.ajax({
 			})
 					
 					
-				}
-			})
+			// 	}
+			// })
 			
 		}
 		function beforeRename(treeId, treeNode, newName, isCancel) {
@@ -295,6 +295,7 @@ $.ajax({
 			if (btn) btn.bind("click", function(){
 				 var data={
 						parentId:treeNode.id,
+
 						departName:"new node"+(newCount++),
 					}
 				$.ajax({

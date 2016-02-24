@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>user-number</title>
+	<title>device-management</title>
 	<link rel="stylesheet" href="css/index.css">
 	<script src="js/jquery.min.js"></script>
     <script src="js/comment.js"></script>
@@ -32,7 +32,7 @@
 				<img src="image/gray-end.png" alt="" class="gray">
 			</div>
 		</div>
-	</div>
+</div>
  <div class="box">
 		<div class="box-left">
 			<a href="javascript:void(0)" class="a1">
@@ -58,11 +58,11 @@
 		<a href="javascript:void(0)"class="a5" >
 			<div>
 				<img src="image/page05.png" alt="">
-				用户账号<span class="show" style="display:block"></span></div></a>
+				用户账号<span ></span></div></a>
 		<a href="javascript:void(0)"class="a6" >
 			<div>
 				<img src="image/page06.png" alt="">
-				硬件管理<span></span></div></a>
+				硬件管理<span class="show" style="display:block"></span></div></a>
 		<a href='javascript:void(0)' class="a7">
 			<div>
 				<img src="image/page07.png" alt="">
@@ -70,7 +70,7 @@
 		</a>
 		</div>
 		<div class="box-right">
-		<div class="right-title">部门管理</div>
+		<div class="right-title">设备管理</div>
 	<!-- 	<div class="right-about">
 			<span class="right-about-span">所属部门</span>
 			<input type="text">
@@ -82,11 +82,11 @@
 			<div class="content-box">
 				<div class="ceshi">
 					<ul class="li-heads">
-							<li>账号名称</li>
-							<li>账号别名</li>
-							<li>用户名</li>
-							<li>登录账号</li>
-							<li>用户电话</li>
+							<li>设备名称</li>
+							<li>设备别名</li>
+							<li>pexip名称</li>
+							<li>pexip密码</li>
+							<li>服务地址</li>
 							<li>操作</li>
 						</ul>
 				</div>
@@ -145,7 +145,7 @@
 				<span class="add-bgc">所属机构</span>
 				<span class="lefts-department">111</span>
 				<span class="add-bgcs">部门</span>
-				<select name="" id="sls"class="department-input"></select>
+				<select name="" id="" id="sls" class="department-input"></select>
 				
 			</div>
 			<div style="position:relative">
@@ -158,10 +158,8 @@
 		</div>
 	
 </div>
-
 <script>
-
-	//获取location参数
+//获取location参数
 function GetRequest() {
 
    var url = location.search; //获取url中"?"符后的字串
@@ -222,39 +220,14 @@ $.ajax({
   dataType:'json',
   success:function(data){
     $(".userss").html(data.data)
-    console.log(data)
   }
 })
-// $.ajax({
-// 	type:"get",
-// 	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token,
-// 	dataType:'json',
-// 	success:function(data){
-// 		console.log(data)
-// 		var datas=data.data
-// 		for (i=0;i<datas.length; i++){
-// 		var	html=''
-// 		 	html+='<div>';
-// 			html+='<ul class="li-head">'
-// 			html+='<li class="accountnum">'+datas[i].accountNum+'</li>';
-// 			html+='<li class="accountalias">'+datas[i].accountAlias+'</li>';
-// 			html+='<li class="displayname">'+datas[i].displayName+'</li>';
-// 			html+='<li class="username">'+datas[i].userName+'</li>';
-// 			html+='<li class="useremail">'+datas[i].userTel+'</li>';
-// 			html+='<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>';
-// 			html+='</ul>';
-// 			html+='</div>';
-// 			$(".content-box").append(html);
-// 		};
-		
-// 	}
-// })
 function getJSONData(pn) {  
     //alert(pn)
-    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users-count?token='+admin_token,function(data){
+    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices-count?token='+admin_token,function(data){
     	var totalCount=data.data.count;// 总记录数
     
-    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) {   
+    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices?token='+admin_token, function(data) {   
         var pageSize = 10; // 每页显示几条记录  
         var pageTotal = Math.ceil(totalCount / pageSize); // 总页数  
         var startPage = pageSize * (pn - 1);  
@@ -270,9 +243,9 @@ function getJSONData(pn) {
                 $(".li-head").eq(j)
                 .append('<li class="accountnum">'+dataRoot[j].accountNum+'</li>')  
                 .append('<li class="accountalias">'+dataRoot[j].accountAlias+'</li>') 
-                .append('<li class="displayname">'+dataRoot[j].displayName+'</li>')  
-                .append('<li class="username">'+dataRoot[j].userName+'</li>')  
-                .append('<li class="useremail">'+dataRoot[j].userTel+'</li>')  
+                .append('<li class="displayname">'+dataRoot[j].pexipName+'</li>')  
+                .append('<li class="username">'+dataRoot[j].pexipPassword+'</li>')  
+                .append('<li class="useremail">cloudp.cc</li>')  
                 .append('<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>')             
             }  
            // $(".sursors") 
@@ -284,10 +257,10 @@ function getJSONData(pn) {
                 $(".li-head").eq(k)
                  .append('<li class="accountnum">'+dataRoot[j].accountNum+'</li>')  
                 .append('<li class="accountalias">'+dataRoot[j].accountAlias+'</li>') 
-                .append('<li class="displayname">'+dataRoot[j].displayName+'</li>')  
-                .append('<li class="username">'+dataRoot[j].userName+'</li>')  
-                .append('<li class="useremail">'+dataRoot[j].userTel+'</li>')  
-                .append('<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>')
+                .append('<li class="displayname">'+dataRoot[j].pexipName+'</li>')  
+                .append('<li class="username">'+dataRoot[j].pexipPassword+'</li>')  
+                .append('<li class="useremail">cloudp.cc</li>')  
+                .append('<li class="description"><img src="image/bianji.png" class="sursors" alt=""></li>')             
             }  
         }  
         $(".page-count").text(pageTotal); 
@@ -297,6 +270,7 @@ function getJSONData(pn) {
           $('.sursors').click(function(){
           		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts?token='+admin_token,function(data){
        		var departmentcount=data.data.length
+       		console.log(data)
        		html='';
        		for (var i = 0; i <departmentcount; i++) {
        			
@@ -308,18 +282,13 @@ function getJSONData(pn) {
           	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) { 
           	 	var  userid=data.data[i].id;
           	 	var  dId=data.data[i].departId;
+          	 	alert(data.data[i].accountNum)
           	 	console.log(userid)
-          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token,function(data){
-          	 		var ss=data.data.departName;
-          	 		var ssparent=data.data.parentId;
           	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token,function(data){
           	 		var aA=data.data.accountAlias;
           	 		var dN=data.data.displayName;
           	 		var uN=data.data.userName;
           	 		var pw=data.data.password;
-          	 		var ut=data.data.userTel;
-          	 		var ue=data.data.userEmail
-          	 		var descrip=data.data.description;
           	 		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'?token='+admin_token,function(data){
           	 			var names=data.data.name
           	 			$(".lefts").html(aA)
@@ -327,50 +296,34 @@ function getJSONData(pn) {
 	          	 		$(".editor-user").val(uN)
 	          	 		$(".editor-password").val(pw)
 	          	 		$(".lefts-department").html(names)
-	          	 		$(".admin-tel").val(ut);
-	          	 		$(".admin-email").val(ue)
-	          	 		$(".description-input").val(descrip)
-	          	 		for(var i=0;i<$("#sls option").length;i++) {  
-				            if($("#sls option").eq(i).val() == ss) {   	
-				                $("#sls option").eq(i).attr('selected',true);  
-				                break;  
-				            }  
-				        } 
           	 		})
+          	 	})
+          	 	      $(".true").click(function(){
+ //          	 	var data={
+	// 	org_id:admin_id,
+	// 	user_id:userid,
+	// 	deptId:dId,
+	// 	token:admin_token,
+	// 	displayName:$(".lefts-right").val(),
+	// 	userName:$(".editor-user").val(),
+	// 	description:$(".description-input").val(),
+	// }
+	var disn=$(".lefts-right").val();
+	var usen=$(".editor-user").val();
+	var dest=$(".description-input").val()
+	$.ajax({
+		type:"put",
+		dataType:"json",
+		url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&userEmail=1111111&userTel=11111111&description='+dest,
+
+		success:function(data){
+			alert('编辑成功')
+			$(".bcgs").hide();
+			$(".forms").hide();
+			location.reload() ;
+		   }
+	})
           	 })
-			     	 	      $(".true").click(function(){
-          	 	      		var valus=$('#sls option:selected') .val()         
-				          	 	$.ajax({
-										type:'put',
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token+'&parentId='+ssparent+'&departName='+valus,
-										dataType:'json',
-										success:function(){
-															var disn=$(".lefts-right").val();
-													var usen=$(".editor-user").val();
-													var dest=$(".description-input").val()
-													var admin_tel=$(".admin-tel").val();
-													var admin_email=$(".admin-email").val()
-													var admin_password=$(".editor-password").val()
-													$.ajax({
-														type:"put",
-														dataType:"json",
-														url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&password='+admin_password+'&userEmail='+admin_email+'&userTel='+admin_tel+'&description='+dest,
-														success:function(data){
-															alert('编辑成功')
-															$(".bcgs").hide();
-															$(".forms").hide();
-															location.reload() ;
-														   }
-													})
-										}
-													})
-
-									
-          	 })
-
-
-})
-
           	 $('.bcgs').show();
              $(".forms").show(); 
           })
@@ -379,14 +332,15 @@ function getJSONData(pn) {
 }
        else{
        		$('.sursors').click(function(){
-       			// 获取部门的select
+       			//获取部门的select
        				$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts?token='+admin_token,function(data){
        		var departmentcount=data.data.length
        		html='';
        		for (var i = 0; i <departmentcount; i++) {
        			
-       			html+='<option value="'+data.data[i].departName+'">'+data.data[i].departName+'</option>'
+       			html+='<option value="">'+data.data[i].departName+'</option>'
        		};
+       		console.log(html)
        		$('.department-input').append(html)
        	})
           	var pagecount=($(".current-page").html()-1)*10;
@@ -394,20 +348,13 @@ function getJSONData(pn) {
           	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) { 
           	 	var  userid=data.data[i].id;
           	 	var  dId=data.data[i].departId;
-          	 	
-          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token,function(data){
-          	 		var ss=data.data.departName;
-          	 		var ssparent=data.data.parentId;
-   										
-         	 	
+          	 	alert(data.data[i].accountNum)
+          	 	console.log(userid)
           	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token,function(data){
           	 		var aA=data.data.accountAlias;
           	 		var dN=data.data.displayName;
           	 		var uN=data.data.userName;
           	 		var pw=data.data.password;
-          	 		var ut=data.data.userTel;
-          	 		var ue=data.data.userEmail
-          	 		var descrip=data.data.description;
           	 		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'?token='+admin_token,function(data){
           	 			var names=data.data.name
           	 			$(".lefts").html(aA)
@@ -415,52 +362,36 @@ function getJSONData(pn) {
 	          	 		$(".editor-user").val(uN)
 	          	 		$(".editor-password").val(pw)
 	          	 		$(".lefts-department").html(names)
-	          	 		$(".admin-tel").val(ut);
-	          	 		$(".admin-email").val(ue)
-	          	 		$(".description-input").val(descrip)
-
-	          	 		for(var i=0;i<$("#sls option").length;i++) {  
-				            if($("#sls option").eq(i).val() == ss) {   	
-				                $("#sls option").eq(i).attr('selected',true);  
-				                break;  
-				            }  
-				        } 
-
           	 		})
           	 	})
+          	 	
           	 $(".true").click(function(){
-          	 	var valus=$('#sls option:selected') .val()         
-          	 	$.ajax({
-						type:'put',
-						url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token+'&parentId='+ssparent+'&departName='+valus,
-						dataType:'json',
-						success:function(){
-							    var disn=$(".lefts-right").val();
-								var usen=$(".editor-user").val();
-								var dest=$(".description-input").val()
-								var admin_tel=$(".admin-tel").val();
-								var admin_email=$(".admin-email").val()
-								var admin_password=$(".editor-password").val()
-								$.ajax({
-									type:"put",
-									dataType:"json",
-									url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&password='+admin_password+'&userEmail='+admin_email+'&userTel='+admin_tel+'&description='+dest,
+ //          	 	var data={
+	// 	org_id:admin_id,
+	// 	user_id:userid,
+	// 	deptId:dId,
+	// 	token:admin_token,
+	// 	displayName:$(".lefts-right").val(),
+	// 	userName:$(".editor-user").val(),
+	// 	description:$(".description-input").val(),
+	// }
+	var disn=$(".lefts-right").val();
+	var usen=$(".editor-user").val();
+	var dest=$(".description-input").val()
+	$.ajax({
+		type:"put",
+		dataType:"json",
+		url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&userEmail=1111111&userTel=11111111&description='+dest,
 
-									success:function(data){
-										alert('编辑成功')
-										$(".bcgs").hide();
-										$(".forms").hide();
-										location.reload() ;
-									   }
-								     })
-						             }
-					             })
-
-	
-          	               })	
-          	 	     })
-
-          	    })
+		success:function(data){
+			alert('编辑成功')
+			$(".bcgs").hide();
+			$(".forms").hide();
+			location.reload() ;
+		   }
+	})
+          	 })	
+          	 })
           	 $('.bcgs').show();
              $(".forms").show(); 
           })
