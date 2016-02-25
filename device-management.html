@@ -125,14 +125,14 @@
 				<span>昵称</span>
 				<input class="lefts-right">
 			</div>
-			<div>
+		<!-- 	<div>
 				<span>账号邮箱</span>
 				<input type="text" class="admin-email">
 			</div>
 			<div>
 				<span>联系电话</span>
 				<input type="text" class="admin-tel">
-			</div>
+			</div> -->
 			<div>
 				<span class="add-bgc">账号名称</span>
 				<input type="text" placeholder="请输入账号名称" class="editor-user">
@@ -145,7 +145,7 @@
 				<span class="add-bgc">所属机构</span>
 				<span class="lefts-department">111</span>
 				<span class="add-bgcs">部门</span>
-				<select name="" id="" id="sls" class="department-input"></select>
+				<select name="" id="slss" class="department-input"></select>
 				
 			</div>
 			<div style="position:relative">
@@ -229,7 +229,7 @@ function getJSONData(pn) {
     
     $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices?token='+admin_token, function(data) {   
         var pageSize = 10; // 每页显示几条记录  
-        var pageTotal = Math.ceil(totalCount / pageSize); // 总页数  
+        var pageTotal = Math.ceil(totalCount / pageSize); // 总页数 
         var startPage = pageSize * (pn - 1);  
         var endPage = startPage + pageSize - 1;  
         var $ul = $(".content-boxes");  
@@ -299,21 +299,18 @@ function getJSONData(pn) {
 	          	 		$(".editor-password").val(pw)
 	          	 		$(".lefts-department").html(names)
 	          	 		$(".description-input").val(descrip)
-	          	 		for(var i=0;i<$("#sls option").length;i++) {  
-				            if($("#sls option").eq(i).val() == ss) {   	
-				                $("#sls option").eq(i).attr('selected',true);  
+	          	 		for(var i=0;i<$("#slss option").length;i++) {  
+				            if($("#slss option").eq(i).val() == ss) {   	
+				                $("#slss option").eq(i).attr('selected',true);  
 				                break;  
 				            }  
 				        } 
           	 		})
           	 	})
           	 	      $(".true").click(function(){
-          	 	      		var valus=$('#sls option:selected') .val()         
-				          	 	$.ajax({
-										type:'put',
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token+'&parentId='+ssparent+'&departName='+valus,
-										dataType:'json',
-										success:function(){
+          	 	      		var valus=$('#slss option:selected') .val()
+          	 	      		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+valus,function(data){         
+				          	 					var dIds=data.data[0].id; 
 												var disn=$(".lefts-right").val();
 												var usen=$(".editor-user").val();
 												var dest=$(".description-input").val()
@@ -321,7 +318,7 @@ function getJSONData(pn) {
 												$.ajax({
 													type:"put",
 													dataType:"json",
-													url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&password='+admin_password+'&userEmail='+admin_email+'&userTel='+admin_tel+'&description='+dest,
+													url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices/'+userid+'?token='+admin_token+'&deptId='+dIds+'&displayName='+disn+'&pexipName='+usen+'&pexipPassword='+admin_password+'&description='+dest,
 
 													success:function(data){
 														alert('编辑成功')
@@ -330,7 +327,7 @@ function getJSONData(pn) {
 														location.reload() ;
 													   }
 												})
-										}
+									
 									})
 						
           	 })
@@ -346,6 +343,7 @@ function getJSONData(pn) {
        			//获取部门的select
        				$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts?token='+admin_token,function(data){
        		var departmentcount=data.data.length
+
        		html='';
        		for (var i = 0; i <departmentcount; i++) {
        			
@@ -377,8 +375,8 @@ function getJSONData(pn) {
 	          	 		$(".lefts-department").html(names)
 	          	 		$(".description-input").val(descrip)
 	          	 		for(var i=0;i<$("#sls option").length;i++) {  
-				            if($("#sls option").eq(i).val() == ss) {   	
-				                $("#sls option").eq(i).attr('selected',true);  
+				            if($("#slss option").eq(i).val() == ss) {   	
+				                $("#slss option").eq(i).attr('selected',true);  
 				                break;  
 				            }  
 				        } 
@@ -386,19 +384,20 @@ function getJSONData(pn) {
           	 	})
           	 	
           	 $(".true").click(function(){
-          	 		var valus=$('#sls option:selected') .val()         
-          	 		$.ajax({
-						type:'put',
-						url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token+'&parentId='+ssparent+'&departName='+valus,
-						dataType:'json',
-						success:function(){
+          	 		var valus=$('#slss option:selected').val() 
+          	 		console.log(valus)       
+          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+valus,function(data){
+          	 					
+							        var dIds=data.data[0].id;
+							        alert(dIds)
 									var disn=$(".lefts-right").val();
 									var usen=$(".editor-user").val();
 									var dest=$(".description-input").val()
+									var admin_password=$(".editor-password").val()
 									$.ajax({
 										type:"put",
 										dataType:"json",
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&userEmail=1111111&userTel=11111111&description='+dest,
+										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices/'+userid+'?token='+admin_token+'&deptId='+dIds+'&displayName='+disn+'&pexipName='+usen+'&pexipPassword='+admin_password+'&description='+dest,
 
 										success:function(data){
 											alert('编辑成功')
@@ -407,7 +406,7 @@ function getJSONData(pn) {
 											location.reload() ;
 										   }
 									})
-						}
+						
 					})
 				
           	 })	
@@ -421,7 +420,7 @@ function getJSONData(pn) {
   })
 }  
 function getPage() {  
-    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users-count?token='+admin_token, function(data) {  
+    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices-count?token='+admin_token, function(data) {  
                 pn = 1;  
                 var totalCount = data.data.count; // 总记录数  
                 var pageSize = 10; // 每页显示几条记录  
@@ -450,7 +449,8 @@ function getPage() {
                         });  
                 $("#lastPage").click(function() {  
                             pn = pageTotal;  
-                            gotoPage(pn);  
+                            gotoPage(pn); 
+                      
                         });  
                 $("#page-jump").click(function(){  
                     if($(".page-num").val()  <= pageTotal && $(".page-num").val() != ''){  

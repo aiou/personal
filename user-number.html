@@ -339,13 +339,12 @@ function getJSONData(pn) {
           	 		})
           	 })
 			     	 	      $(".true").click(function(){
-          	 	      		var valus=$('#sls option:selected') .val()         
-				          	 	$.ajax({
-										type:'put',
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token+'&parentId='+ssparent+'&departName='+valus,
-										dataType:'json',
-										success:function(){
-															var disn=$(".lefts-right").val();
+          	 	      		var valus=$('#sls option:selected') .val() 
+          	 	      			$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+valus,function(data){
+					          	 		     
+									
+											        var dIds=data.data[0].id;  
+													var disn=$(".lefts-right").val();
 													var usen=$(".editor-user").val();
 													var dest=$(".description-input").val()
 													var admin_tel=$(".admin-tel").val();
@@ -354,7 +353,7 @@ function getJSONData(pn) {
 													$.ajax({
 														type:"put",
 														dataType:"json",
-														url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&password='+admin_password+'&userEmail='+admin_email+'&userTel='+admin_tel+'&description='+dest,
+														url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dIds+'&displayName='+disn+'&userName='+usen+'&password='+admin_password+'&userEmail='+admin_email+'&userTel='+admin_tel+'&description='+dest,
 														success:function(data){
 															alert('编辑成功')
 															$(".bcgs").hide();
@@ -362,11 +361,13 @@ function getJSONData(pn) {
 															location.reload() ;
 														   }
 													})
-										}
+										
 													})
+
 
 									
           	 })
+
 
 
 })
@@ -391,9 +392,11 @@ function getJSONData(pn) {
        	})
           	var pagecount=($(".current-page").html()-1)*10;
           	var i=$(this).parent().parent().index()+pagecount;
+
           	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) { 
           	 	var  userid=data.data[i].id;
           	 	var  dId=data.data[i].departId;
+          	 	
           	 	
           	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token,function(data){
           	 		var ss=data.data.departName;
@@ -418,7 +421,6 @@ function getJSONData(pn) {
 	          	 		$(".admin-tel").val(ut);
 	          	 		$(".admin-email").val(ue)
 	          	 		$(".description-input").val(descrip)
-
 	          	 		for(var i=0;i<$("#sls option").length;i++) {  
 				            if($("#sls option").eq(i).val() == ss) {   	
 				                $("#sls option").eq(i).attr('selected',true);  
@@ -429,12 +431,10 @@ function getJSONData(pn) {
           	 		})
           	 	})
           	 $(".true").click(function(){
-          	 	var valus=$('#sls option:selected') .val()         
-          	 	$.ajax({
-						type:'put',
-						url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token+'&parentId='+ssparent+'&departName='+valus,
-						dataType:'json',
-						success:function(){
+          	 	var valus=$('#sls option:selected').val() 
+          	 	alert(valus)
+          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+valus,function(data){
+          	 					dIds=data.data[0].id;
 							    var disn=$(".lefts-right").val();
 								var usen=$(".editor-user").val();
 								var dest=$(".description-input").val()
@@ -444,7 +444,7 @@ function getJSONData(pn) {
 								$.ajax({
 									type:"put",
 									dataType:"json",
-									url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+disn+'&userName='+usen+'&password='+admin_password+'&userEmail='+admin_email+'&userTel='+admin_tel+'&description='+dest,
+									url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dIds+'&displayName='+disn+'&userName='+usen+'&password='+admin_password+'&userEmail='+admin_email+'&userTel='+admin_tel+'&description='+dest,
 
 									success:function(data){
 										alert('编辑成功')
@@ -453,9 +453,8 @@ function getJSONData(pn) {
 										location.reload() ;
 									   }
 								     })
-						             }
-					             })
-
+						             
+								}) 
 	
           	               })	
           	 	     })
