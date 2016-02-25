@@ -274,7 +274,7 @@ function getJSONData(pn) {
        		html='';
        		for (var i = 0; i <departmentcount; i++) {
        			
-       			html+='<option value="">'+data.data[i].departName+'</option>'
+       			html+='<option value="'+data.data[i].departName+'">'+data.data[i].departName+'</option>'
        		};
        		$('.department-input').append(html)
        	})
@@ -347,24 +347,24 @@ function getJSONData(pn) {
        		html='';
        		for (var i = 0; i <departmentcount; i++) {
        			
-       			html+='<option value="">'+data.data[i].departName+'</option>'
+       			html+='<option value="'+data.data[i].departName+'">'+data.data[i].departName+'</option>'
        		};
        		console.log(html)
        		$('.department-input').append(html)
        	})
           	var pagecount=($(".current-page").html()-1)*10;
           	var i=$(this).parent().parent().index()+pagecount;
-          	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users?token='+admin_token, function(data) { 
+          	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices?token='+admin_token, function(data) { 
           	 	var  userid=data.data[i].id;
           	 	var  dId=data.data[i].departId;
           	 		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/'+dId+'?token='+admin_token,function(data){
           	 		var ss=data.data.departName;
           	 		var ssparent=data.data.parentId;
-          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token,function(data){
+          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices/'+userid+'?token='+admin_token,function(data){
           	 		var aA=data.data.accountAlias;
           	 		var dN=data.data.displayName;
-          	 		var uN=data.data.userName;
-          	 		var pw=data.data.password;
+          	 		var uN=data.data.pexipName;
+          	 		var pw=data.data.pexipPassword;
           	 		var descrip=data.data.description;
           	 		$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'?token='+admin_token,function(data){
           	 			var names=data.data.name
@@ -374,7 +374,7 @@ function getJSONData(pn) {
 	          	 		$(".editor-password").val(pw)
 	          	 		$(".lefts-department").html(names)
 	          	 		$(".description-input").val(descrip)
-	          	 		for(var i=0;i<$("#sls option").length;i++) {  
+	          	 		for(var i=0;i<$("#slss option").length;i++) {  
 				            if($("#slss option").eq(i).val() == ss) {   	
 				                $("#slss option").eq(i).attr('selected',true);  
 				                break;  
@@ -387,9 +387,7 @@ function getJSONData(pn) {
           	 		var valus=$('#slss option:selected').val() 
           	 		console.log(valus)       
           	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+valus,function(data){
-          	 					
 							        var dIds=data.data[0].id;
-							        alert(dIds)
 									var disn=$(".lefts-right").val();
 									var usen=$(".editor-user").val();
 									var dest=$(".description-input").val()
