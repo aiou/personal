@@ -530,6 +530,12 @@ input::-moz-focus-inner {
 .li-head{
 	overflow: hidden;
 }
+.liheadtwo{
+	overflow: hidden;
+}
+.li-head-meetingroom{
+	overflow: hidden;
+}
 .content-box div:first-child{
 	background:#31a3dd; 
 	color: #fff;
@@ -548,7 +554,7 @@ input::-moz-focus-inner {
     display: none;
 
 }
-.forms{
+.forms,.meeting-form,.add-meeting,.meetingroom-form,.meetingroom-formtwo{
 	width: 350px;
     padding: 10px 20px;
     z-index: 999;
@@ -562,6 +568,15 @@ input::-moz-focus-inner {
     font-size: 13px;
     font-family: " 微软雅黑";
     display: none;
+}
+.meeting-form,.add-meeting{
+	height: 296px;
+}
+.meetingroom-form{
+	height: 450px;
+}
+.meetingroom-formtwo{
+	height: 480px;
 }
 .editors{
 	text-align: center;
@@ -602,6 +617,10 @@ input::-moz-focus-inner {
 .add-bgc{
 	background: url(../image/xing.png) no-repeat 0px 2px;
 }
+.form-box .add-bgces{
+	background: url(../image/xing.png) no-repeat 0px 2px;
+	width: 98px;
+}
 .form-box .add-bgcs{
 	width: 38px;
 	text-align: inherit;
@@ -611,6 +630,9 @@ input::-moz-focus-inner {
 .bottom-span{
 	position: absolute;
 
+}
+.meeting-topic,.meeting-count,.meeting-password,#meetingroom{
+	margin-left: 22px;
 }
 .pages{
 	position: absolute;
@@ -647,6 +669,31 @@ input::-moz-focus-inner {
 	left: 84px;
 	cursor: pointer;
 }
+.true-box{
+	text-align: center;
+}
+.trues{
+	display: inline-block;
+	background: #31a3dd;
+	border-radius: 8px;
+	width: 100px;
+	height: 20px;
+	color: #fff;
+	font-family: "微软雅黑";
+	line-height: 20px;
+	cursor: pointer;
+}
+.cancels{
+	display: inline-block;
+	background: #31a3dd;
+	border-radius: 8px;
+	width: 100px;
+	height: 20px;
+	color: #fff;
+	font-family: "微软雅黑";
+	line-height: 20px;
+	cursor: pointer;
+}
 .cancel{
 	position: relative;
 	top: 135px;
@@ -660,4 +707,75 @@ input::-moz-focus-inner {
 	font-family: "微软雅黑";
 	line-height: 20px;
 	cursor: pointer;
+}
+.li-headtwos li{
+	width: 175px;
+	float: left;
+	font-family: "微软雅黑";
+	font-size: 13px;
+	text-align: center;
+}
+.li-headtwo li{
+	width: 175px;
+	float: left;
+	font-family: "微软雅黑";
+	font-size: 13px;
+	text-align: center;
+}
+.delet{
+	margin-left: 15px;
+}
+#datetime1,#datetime2{
+	width: 200px;
+}
+.new-meeting{
+	position: absolute;
+	display: block;
+	background: #31a3dd;
+	height: 30px;
+	line-height: 30px;
+	font-family: "微软雅黑";
+	top: 17px;
+	right:10px;
+	color: #fff;
+	padding-left: 10px;
+	padding-right: 10px;
+	text-indent: 0px;
+	font-size: 14px;
+	border-radius: 8px;
+	cursor: pointer;
+}
+.form-box .can-use{
+	    position: absolute;
+    display: block;
+    background: #31a3dd;
+    height: 20px;
+    line-height: 20px;
+    font-family: "微软雅黑";
+    top: -1px;
+    right: 23px;
+    color: #fff;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-indent: 0px;
+    font-size: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    width: auto;
+}
+.li-head-meetingrooms li,.li-head-meetingroom li{
+	width: 115px;
+	float: left;
+	font-family: "微软雅黑";
+	font-size: 13px;
+	text-align: center;
+}
+.li-head-meetingroom .meetingroom-add-time{
+	width: 175px;
+}
+.li-head-meetingrooms .meetingroom-ed{
+	width: 175px;
+}
+#meeting-room{
+	width: 211px;
 }

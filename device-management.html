@@ -198,10 +198,10 @@ for (var i = 0; i<a; i++) {
 			location.href='status.html?name='+admin_token+'&id='+admin_id;
 		}
 		else if($(this).hasClass('a2')){
-			location.href='change-password.html?name='+admin_token+'&id='+admin_id;
+			location.href='meeting-management.html?name='+admin_token+'&id='+admin_id;
 		}
 		else if($(this).hasClass('a3')){
-			location.href='change-password.html?name='+admin_token+'&id='+admin_id;
+			location.href='meetingroom-management.html?name='+admin_token+'&id='+admin_id;
 		}
 		else if($(this).hasClass('a4')){
 			location.href='department-management.html?name='+admin_token+'&id='+admin_id;
@@ -475,30 +475,6 @@ function clicks(){
 		location.reload();
 	})
 } 
-// function sureclick(){
-// 	$(".true").click(function(){
-// 		alert(userid)
-	// var data={
-	// 	org_id:admin_id,
-	// 	user_id:userid,
-	// 	deptId:dId,
-	// 	token:admin_token,
-	// 	displayName:$(".lefts-right").val(),
-	// 	userName:$(".editor-user").val(),
-	// 	description:$(".description-input").val(),
-	// }
-	// $.ajax({
-	// 	type:"put",
-	// 	dataType:"json",
-	// 	url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/users/'+userid+'?token='+admin_token+'&deptId='+dId+'&displayName='+$(".lefts-right").val()+'&userName='+$(".editor-user").val()+'&description='+$(".description-input").val(),
-	// 	success:function(data){
-	// 		console.log(1)
-	// 		$(".bcgs").hide();
-	// 	}
-	// })
-// 	})
-// }
-
 $(function() {  
     getPage();  
     clicks()

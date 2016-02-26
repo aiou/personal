@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>meeetingroom-management</title>
+	<link rel="stylesheet" href="css/index.css">
+	<script src="js/jquery.min.js"></script>
+    <script src="js/comment.js"></script>
+</head>
+<style>
+html{
+	width: 100%;
+	height: 100%;
+	}
+	body{
+	width: 100%;
+	height: 100%;
+	background: url(image/big-bcg.png) no-repeat 0px 0px;
+	background-size: 100%;
+
+}
+</style>
+<body>
+<div class="head">
+		<div class="head-content">
+			<h1 class="left"><img src="image/logo.png" alt=""></h1>
+			<div class="right">
+				<div>管理员</div>
+				<div class="userss"></div>
+			</div>
+			<div class="right2">
+				<img src="image/red-end.png" alt="" style="display:none;" class="red">
+				<img src="image/gray-end.png" alt="" class="gray">
+			</div>
+		</div>
+</div>
+ <div class="box">
+		<div class="box-left">
+			<a href="javascript:void(0)" class="a1">
+			<div>
+				<img src="image/page01.png" alt="">
+				状态总览
+				<span>		
+				</span>
+			</div>
+		</a>
+		<a href="javascript:void(0)" class="a2" >
+			<div>
+				<img src="image/page02.png" alt="">
+				会议管理<span></span></div></a>
+		<a href="javascript:void(0)" class="a3">
+			<div>
+				<img src="image/page03.png" alt="">
+				会议室管理<span class="show" style="display:block"></span></div></a>
+		<a href="javascript:void(0)" class="a4">
+			<div>
+				<img src="image/page04.png" alt="">
+				部门管理<span></span></div></a>
+		<a href="javascript:void(0)"class="a5" >
+			<div>
+				<img src="image/page05.png" alt="">
+				用户账号<span ></span></div></a>
+		<a href="javascript:void(0)"class="a6" >
+			<div>
+				<img src="image/page06.png" alt="">
+				硬件管理<span></span></div></a>
+		<a href='javascript:void(0)' class="a7">
+			<div>
+				<img src="image/page07.png" alt="">
+				修改密码<span></span></div>
+		</a>
+		</div>
+		<div class="box-right">
+		<div class="right-title">会议室管理
+			<span class="new-meeting">新建会议室</span>
+		</div>
+		<div class="user-content">
+			<div class="content-box">
+				<div class="ceshi">
+					<ul class="li-head-meetingroom">
+							<li>会议室名</li>
+							<li>会议室号</li>
+							<li>限制人数</li>
+							<li>主持人密码</li>
+							<li>访客密码</li>
+							<li class="meetingroom-add-time">创建时间</li>
+							<li>操作</li>
+					</ul>
+				</div>
+				<div class="content-boxes"></div>
+				<div class="pages">
+						<span>第<span class="current-page"></span>页</span>
+						<span>共<span class="page-count"></span>页</span>
+						<span id="firstPage">首页</span>
+						<span id="prev">上一页</span>
+						<span id="next">下一页</span>
+						<span id="lastPage">最后一页</span>
+						<input type="text" class="page-num">
+						<span id="page-jump">跳转</span>
+	            </div>
+			<!-- 		<ul class="li-head">
+							<li class="accountnum">1212</li>
+							<li class="accountalias">122</li>
+							<li class="displayname">15454</li>
+							<li class="username">15456</li>
+							<li class="useremail">465465</li>
+							<li class="description"><img src="image/bianji.png" alt=""></li>
+						</ul>
+				</div> -->
+			</div>
+		</div>
+
+	</div>
+</div>
+<div class="bcgs"></div>
+<div class="meetingroom-form">
+	<div class="editors">编辑会议室</div>
+	<div class="form-box">
+	<div>
+			<span class="add-bgc">会议室名</span>
+			<input type="text" class="meetingroom-name">			
+			</div>
+	<div>
+			<span class="add-bgc">会议室号</span>
+			<span class="meetingroom-num"></span>	
+	</div>
+<!-- 	<div>
+			<span class="add-bgc">host-view</span>
+			<select name="" id="meeting-room">
+				<option value="">全屏主要发言者（单个语音切换布局）</option>
+				<option value="">较大的主要发言者和最多 7 位其他与会者(1 + 7 布局)</option>
+				<option value="">较小的主要发言者和最多 21 位其他与会者(1 + 21 布局)</option>
+			</select>	
+	</div> -->
+			<div>
+				<span class="add-bgc">参会人数</span>
+				<input type="text" placeholder=" 不超过50人" class="meetingroom-count">
+			</div>
+			<div>
+				<span>主持密码</span>
+				<input type="password" class="host-password" placeholder=" 请输入密码" >
+			</div>
+			<div>
+				<span>访客密码</span>
+				<input type="password" class="guest-password" placeholder=" 请输入密码" >
+			</div>
+			<div style="position:relative">
+				<span class="bottom-span">会议室描述</span>
+				<textarea name="" id="" cols="30" rows="10" placeholder=" 请输入描述信息，300字以内" class="description-input"></textarea>
+				<span class="true">确定</span>
+				<span class="cancel">取消</span>
+			</div>
+</div>
+</div>
+<div class="meetingroom-formtwo">
+	<div class="editors">新建会议室</div>
+	<div class="form-box">
+	<div>
+			<span class="add-bgc">会议室名</span>
+			<input type="text" class="meetingroom-name">			
+			</div>
+
+	<div>
+			<span class="add-bgc">host-view</span>
+			<select name="" id="meeting-room">
+				<option value="全屏主要发言者（单个语音切换布局）">全屏主要发言者（单个语音切换布局）</option>
+				<option value="较大的主要发言者和最多 7 位其他与会者(1 + 7 布局)">较大的主要发言者和最多 7 位其他与会者(1 + 7 布局)</option>
+				<option value="较小的主要发言者和最多 21 位其他与会者(1 + 21 布局)">较小的主要发言者和最多 21 位其他与会者(1 + 21 布局)</option>
+			</select>	
+	</div>
+			<div>
+				<span class="add-bgc">参会人数</span>
+				<input type="text" placeholder=" 不超过50人" class="meetingroom-count">
+			</div>
+			<div>
+				<span>主持密码</span>
+				<input type="password" class="host-password" placeholder=" 请输入密码" >
+			</div>
+			<div>
+				<span>访客密码</span>
+				<input type="password" class="guest-password" placeholder=" 请输入密码" >
+			</div>
+			<div style="position:relative">
+				<span class="bottom-span">会议室描述</span>
+				<textarea name="" id="" cols="30" rows="10" placeholder=" 请输入描述信息，300字以内" class="description-input"></textarea>
+				<span class="true">确定</span>
+				<span class="cancel">取消</span>
+			</div>
+</div>
+</div>
+<script>
+//获取location参数
+function GetRequest() {
+
+   var url = location.search; //获取url中"?"符后的字串
+
+   var theRequest = new Object();
+
+   if (url.indexOf("?") != -1) {
+
+      var str = url.substr(1);
+
+      strs = str.split("&");
+
+      for(var i = 0; i < strs.length; i ++) {
+
+         theRequest[strs[i].split("=")[0]]=unescape(strs[i].split("=")[1]);
+
+      }
+
+   }
+   return theRequest;
+
+}
+var Request = new Object();
+
+Request = GetRequest();
+var admin_id=Request.id
+var admin_token=Request.name
+var lefts=$(".box-left a")
+var a=lefts.length
+for (var i = 0; i<a; i++) {
+	lefts.eq(i).click(function(){
+		if($(this).hasClass('a7')){
+			location.href='change-password.html?name='+admin_token+'&id='+admin_id;
+		}
+		else if($(this).hasClass('a1')){
+			location.href='status.html?name='+admin_token+'&id='+admin_id;
+		}
+		else if($(this).hasClass('a2')){
+			location.href='meeting-management.html?name='+admin_token+'&id='+admin_id;
+		}
+		else if($(this).hasClass('a3')){
+			location.href='meetingroom-management.html?name='+admin_token+'&id='+admin_id;
+		}
+		else if($(this).hasClass('a4')){
+			location.href='department-management.html?name='+admin_token+'&id='+admin_id;
+		}
+		else if($(this).hasClass('a5')){
+			location.href='user-number.html?name='+admin_token+'&id='+admin_id;
+		}
+		else if($(this).hasClass('a6')){
+			location.href='device-management.html?name='+admin_token+'&id='+admin_id;
+		}
+	})
+}
+$.ajax({
+  type:"get",
+  url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-displayname?token='+admin_token,
+  dataType:'json',
+  success:function(data){
+    $(".userss").html(data.data)
+  }
+})
+function getJSONData(pn) {     
+    $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs?token='+admin_token, function(data) {   
+    	var totalCount=data.data.length;
+        var pageSize = 10; // 每页显示几条记录  
+        var pageTotal = Math.ceil(totalCount / pageSize); // 总页数 
+        var startPage = pageSize * (pn - 1);  
+        var endPage = startPage + pageSize - 1;  
+        var $ul = $(".content-boxes");  
+        $ul.empty();  
+        for (var i = 0; i < pageSize; i++) {  
+            $ul.append('<ul class="li-head-meetingrooms"></ul>');  
+        }  
+        var dataRoot = data.data;  
+        if (pageTotal == 1) {     // 当只有一页时  
+            for (var j = 0; j < totalCount; j++) {  
+                $(".li-head-meetingrooms").eq(j)
+                .append('<li>'+dataRoot[j].name+'</li>')  
+                .append('<li class="meetingroom-num">'+dataRoot[j].meetingRoomNum+'</li>') 
+                .append('<li class="meetingroom-cc">'+dataRoot[j].capacity+'</li>')  
+                .append('<li class="meetingroom-hp">'+dataRoot[j].hostPassword+'</li>')
+                .append('<li class="meetingroom-gp">'+dataRoot[j].guestPassword+'</li>')
+                 .append('<li class="meetingroom-ed">'+dataRoot[j].expirationDate+'</li>')       
+                .append('<li class="description"><img src="image/bianji.png" class="editored" alt=""> </li>')             
+            }  
+           // $(".sursors") 
+        } else {  
+            for (var j = startPage, k = 0; j < endPage, k < pageSize; j++, k++) {  
+                if( j == totalCount){  
+                    break;       // 当遍历到最后一条记录时，跳出循环  
+                }  
+                $(".li-head-meetingrooms").eq(k)
+                .append('<li>'+dataRoot[j].name+'</li>')  
+                .append('<li class="meetingroom-num">'+dataRoot[j].meetingRoomNum+'</li>') 
+                .append('<li class="meetingroom-cc">'+dataRoot[j].capacity+'</li>')  
+                .append('<li class="meetingroom-hp">'+dataRoot[j].hostPassword+'</li>')
+                .append('<li class="meetingroom-gp">'+dataRoot[j].guestPassword+'</li>')
+                .append('<li class="meetingroom-ed">'+dataRoot[j].expirationDate+'</li>')       
+                .append('<li class="description"><img src="image/bianji.png" class="editored" alt=""> </li>')               
+            }  
+        }  
+        $(".page-count").text(pageTotal); 
+       if (pageTotal == 1){
+        var pagelength=$(".sursors").length;
+          $('.editored').click(function(){
+          	var i=$(this).parent().parent().index();
+         	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs?token='+admin_token, function(data) { 
+          	 	var  meetingroomid=data.data[i].id;
+          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?token='+admin_token,function(data){
+          	 		// var descrip=data.data.description;
+          	 		var mr=data.data.meetingRoomNum;
+          	 		var di=data.data.departId;
+          	 		var nm=data.data.name;
+          	 		var cc=data.data.capacity;
+                    var hp=data.data.hostPassword
+                    var gp=data.data.guestPassword;
+          	 			$(".meetingroom-name").val(nm);
+          	 			$(".meetingroom-num").html(mr);
+	          	 		$(".meetingroom-count").val(cc);
+	          	 		$(".host-password").val(hp);
+	          	 		$(".guest-password").val(gp);
+          	 	
+          	 $(".true").click(function(){
+          	 	    var mN=$(".meetingroom-name").val();
+          	 		var mC=$(".meetingroom-count").val();
+          	 		var hP=$(".host-password").val();
+	          	 	var gP=$(".guest-password").val();
+	          	 	alert(di)
+	          	 	var dP=$(".description-input").val()
+									$.ajax({
+										type:"put",
+										dataType:"json",
+										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?token='+admin_token+'&capacity='+mC+'&guestPassword='+gP+'&hostPassword='+hP+'&description='+dP+'&deptId='+di+'&name='+mN,
+										success:function(data){
+											alert('编辑成功')
+											$(".bcgs").hide();
+											$(".meetingroom-form").hide();
+											location.reload() ;
+										   }
+									})
+				
+          				 })	
+          			 })
+				})
+          	 $('.bcgs').show();
+             $(".meetingroom-form").show(); 
+          })    
+        }
+       else{
+       		$('.editored').click(function(){
+          	var pagecount=($(".current-page").html()-1)*10;
+          	var i=$(this).parent().parent().index()+pagecount;
+          	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs?token='+admin_token, function(data) { 
+          	 	var  meetingroomid=data.data[i].id;
+          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?token='+admin_token,function(data){
+          	 		// var descrip=data.data.description;
+          	 		var mr=data.data.meetingRoomNum;
+          	 		var di=data.data.departId;
+          	 		var nm=data.data.name;
+          	 		var cc=data.data.capacity;
+                    var hp=data.data.hostPassword
+                    var gp=data.data.guestPassword;
+          	 			$(".meetingroom-name").val(nm);
+          	 			$(".meetingroom-num").html(mr);
+	          	 		$(".meetingroom-count").val(cc);
+	          	 		$(".host-password").val(hp);
+	          	 		$(".guest-password").val(gp);
+          	 	
+          	 $(".true").click(function(){
+          	 	    var mN=$(".meetingroom-name").val();
+          	 		var mC=$(".meetingroom-count").val();
+          	 		var hP=$(".host-password").val();
+	          	 	var gP=$(".guest-password").val();
+	          	 	alert(di)
+	          	 	var dP=$(".description-input").val()
+									$.ajax({
+										type:"put",
+										dataType:"json",
+										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?token='+admin_token+'&capacity='+mC+'&guestPassword='+gP+'&hostPassword='+hP+'&description='+dP+'&deptId='+di+'&name='+mN,
+										success:function(data){
+											alert('编辑成功')
+											$(".bcgs").hide();
+											$(".meetingroom-form").hide();
+											location.reload() ;
+										   }
+									})
+				
+          				 })	
+          			 })
+				})
+          	 $('.bcgs').show();
+             $(".meetingroom-form").show(); 
+          })
+       }
+    })  
+}  
+function getPage() {  
+   $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs?token='+admin_token, function(data) {  
+                pn = 1;  
+                var totalCount = data.data.length; // 总记录数  
+                var pageSize = 10; // 每页显示几条记录  
+                var pageTotal = Math.ceil(totalCount / pageSize); // 总页数  
+                $("#next").click(function() {  
+                            if (pn == pageTotal) {  
+                                alert("后面没有了");  
+                                pn = pageTotal;  
+                            } else {  
+                                pn++;  
+                                gotoPage(pn);  
+                            }  
+                        });  
+                $("#prev").click(function() {  
+                            if (pn == 1) {  
+                                alert("前面没有了");  
+                                pn = 1;  
+                            } else {  
+                                pn--;  
+                                gotoPage(pn);  
+                            }  
+                        })  
+                $("#firstPage").click(function() {  
+                            pn = 1;  
+                            gotoPage(pn);  
+                        });  
+                $("#lastPage").click(function() {  
+                            pn = pageTotal;  
+                            gotoPage(pn); 
+                      
+                        });  
+                $("#page-jump").click(function(){  
+                    if($(".page-num").val()  <= pageTotal && $(".page-num").val() != ''){  
+                        pn = $(".page-num").val();  
+                        gotoPage(pn);  
+                    }else{  
+                        alert("您输入的页码有误！");  
+                        $(".page-num").val('').focus();  
+                    }  
+                })  
+                $("#firstPage").trigger("click");  
+                  
+            })  
+}  
+function gotoPage(pn) {  
+    // alert(pn);  
+    $(".current-page").text(pn);  
+    getJSONData(pn)  
+}  
+function clicks(){
+	$(".cancel").click(function(){
+		$(".bcgs").hide();
+		$(".meetingroom-form").hide()
+		location.reload();
+	})
+} 
+$(function() {  
+    getPage();  
+    clicks()
+}) 
+$(".new-meeting").click(function(){
+	$(".bcgs").show()
+	$(".meetingroom-formtwo").show();
+	$(".true").click(function(){
+		var a=$.trim($(".host-password").val());
+		var b=$.trim($(".guest-password").val());
+		var c=/^[0-9]*$/;
+		if(!a.match(c)){
+			alert('密码为6到10位纯数字')
+			return false;
+		}
+		else if(!b.match(c)){
+			alert('密码为6到10位纯数字')
+			return false;
+		}
+		else if(a.length!==b.length){
+			alert("密码长度必须一致")
+			return false;
+		}
+		else{
+
+
+
+	var values=$("#meeting-room option:selected").val()
+	var host
+	if(values=='全屏主要发言者（单个语音切换布局）'){
+		host='one_main_zero_pips'
+	}
+	else if(values=='较大的主要发言者和最多 7 位其他与会者(1 + 7 布局)'){
+		host='one_main_seven_pips'
+	}
+	else if(values=='较小的主要发言者和最多 21 位其他与会者(1 + 21 布局)'){
+		host='one_main_twentyone_pips'
+	}
+}
+	var data={
+		name:$(".meetingroom-name").val(),
+		capacity:$(".meetingroom-count").val(),
+		hostPassword:$(".host-password").val(),
+		guestPassword:$(".guest-password").val(),
+		description:$(".description-input").val(),
+		host_view:host,
+	}
+	
+	// $.ajax({
+	// 	type:'post',
+	// 	data:data,
+	// 	dataType:'json',
+	// 	url:
+	// })
+
+	})
+	
+})
+</script>
+</body>
+</html>

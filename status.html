@@ -161,7 +161,6 @@ $.ajax({
   dataType:'json',
   success:function(data){
     $(".departments").html(data.data.name)
-    console.log(data.data.name)
   }
 })
 $.ajax({
@@ -170,7 +169,6 @@ $.ajax({
   dataType:'json',
   success:function(data){
     $(".userss").html(data.data)
-    console.log(data)
   }
 })
 $.ajax({
@@ -179,7 +177,6 @@ $.ajax({
   dataType:'json',
   success:function(data){
     $(".id_totals").html(data.data.count)
-    console.log(data)
   }
 })
 //获取会议室总数
@@ -189,7 +186,7 @@ $.ajax({
   dataType:'json',
   success:function(data){
     $(".room_totals").html(data.data.count)
-    console.log(data.name)
+
   }
 })
 //获取可用会议室总数
@@ -209,7 +206,7 @@ $.ajax({
   success:function(data){
     $(".department-time").html(data.data.expirationDate)
     $(".Days_Remaining").html(data.data.days)
-    console.log(data)
+ 
   }
 })
 var lefts=$(".box-left a")
@@ -223,10 +220,10 @@ for (var i = 0; i<a; i++) {
 			location.href='change-password.html?name='+admin_token+'&id='+admin_id;
 		}
 		else if($(this).hasClass('a2')){
-			location.href='change-password.html?name='+admin_token+'&id='+admin_id;
+			location.href='meeting-management.html?name='+admin_token+'&id='+admin_id;
 		}
 		else if($(this).hasClass('a3')){
-			location.href='change-password.html?name='+admin_token+'&id='+admin_id;
+			location.href='meetingroom-management.html?name='+admin_token+'&id='+admin_id;
 		}
 		else if($(this).hasClass('a4')){
 			location.href='department-management.html?name='+admin_token+'&id='+admin_id;
