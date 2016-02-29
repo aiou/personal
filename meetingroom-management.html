@@ -21,7 +21,7 @@ html{
 }
 </style>
 <body>
-<div class="head">
+<div class="head" style="height:72px;">
 		<div class="head-content">
 			<h1 class="left"><img src="image/logo.png" alt=""></h1>
 			<div class="right">
@@ -61,7 +61,7 @@ html{
 				<img src="image/page05.png" alt="">
 				用户账号<span ></span></div></a>
 		<a href="javascript:void(0)"class="a6" >
-			<div>
+			<div>		
 				<img src="image/page06.png" alt="">
 				硬件管理<span></span></div></a>
 		<a href='javascript:void(0)' class="a7">
@@ -157,7 +157,7 @@ html{
 	<div class="form-box">
 	<div>
 			<span class="add-bgc">会议室名</span>
-			<input type="text" class="meetingroom-name">			
+			<input type="text" class="meetingroom-names">			
 			</div>
 
 	<div>
@@ -168,21 +168,25 @@ html{
 				<option value="较小的主要发言者和最多 21 位其他与会者(1 + 21 布局)">较小的主要发言者和最多 21 位其他与会者(1 + 21 布局)</option>
 			</select>	
 	</div>
+	<div>
+		<span class="add-bgc">所属部门</span>
+		<select name="" id="meetingroom-departname"></select>
+	</div>
 			<div>
 				<span class="add-bgc">参会人数</span>
-				<input type="text" placeholder=" 不超过50人" class="meetingroom-count">
+				<input type="text" placeholder=" 不超过50人" class="meetingroom-counts">
 			</div>
 			<div>
 				<span>主持密码</span>
-				<input type="password" class="host-password" placeholder=" 请输入密码" >
+				<input type="password" class="host-passwords" placeholder=" 请输入密码" >
 			</div>
 			<div>
 				<span>访客密码</span>
-				<input type="password" class="guest-password" placeholder=" 请输入密码" >
+				<input type="password" class="guest-passwords" placeholder=" 请输入密码" >
 			</div>
 			<div style="position:relative">
 				<span class="bottom-span">会议室描述</span>
-				<textarea name="" id="" cols="30" rows="10" placeholder=" 请输入描述信息，300字以内" class="description-input"></textarea>
+				<textarea name="" id="" cols="30" rows="10" placeholder=" 请输入描述信息，300字以内" class="description-inputs"></textarea>
 				<span class="true">确定</span>
 				<span class="cancel">取消</span>
 			</div>
@@ -318,12 +322,12 @@ function getJSONData(pn) {
           	 		var mC=$(".meetingroom-count").val();
           	 		var hP=$(".host-password").val();
 	          	 	var gP=$(".guest-password").val();
-	          	 	alert(di)
 	          	 	var dP=$(".description-input").val()
+	          	 	var meetingroomnum=$(".meetingroom-num").html();
 									$.ajax({
 										type:"put",
 										dataType:"json",
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?token='+admin_token+'&capacity='+mC+'&guestPassword='+gP+'&hostPassword='+hP+'&description='+dP+'&deptId='+di+'&name='+mN,
+										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?meetRoomNum='+meetingroomnum+'&token='+admin_token+'&capacity='+mC+'&guestPassword='+gP+'&hostPassword='+hP+'&description='+dP+'&deptId='+di+'&name='+mN,
 										success:function(data){
 											alert('编辑成功')
 											$(".bcgs").hide();
@@ -364,12 +368,12 @@ function getJSONData(pn) {
           	 		var mC=$(".meetingroom-count").val();
           	 		var hP=$(".host-password").val();
 	          	 	var gP=$(".guest-password").val();
-	          	 	alert(di)
 	          	 	var dP=$(".description-input").val()
+	          	 	var meetingroomnum=$(".meetingroom-num").html();
 									$.ajax({
 										type:"put",
 										dataType:"json",
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?token='+admin_token+'&capacity='+mC+'&guestPassword='+gP+'&hostPassword='+hP+'&description='+dP+'&deptId='+di+'&name='+mN,
+										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs/'+meetingroomid+'?meetRoomNum='+meetingroomnum+'&token='+admin_token+'&capacity='+mC+'&guestPassword='+gP+'&hostPassword='+hP+'&description='+dP+'&deptId='+di+'&name='+mN,
 										success:function(data){
 											alert('编辑成功')
 											$(".bcgs").hide();
@@ -450,28 +454,44 @@ $(function() {
     clicks()
 }) 
 $(".new-meeting").click(function(){
+	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/depts/?token='+admin_token,function(data){
+          	 						var departmentcount=data.data.length
+       		                        html='';
+       		                        for (var i = 0; i <departmentcount; i++) {
+       			
+       			                    html+='<option value="'+data.data[i].departName+'">'+data.data[i].departName+'</option>'
+       		                            };
+       		                        $('#meetingroom-departname').append(html)
+          	 				})
+          	 		
 	$(".bcgs").show()
 	$(".meetingroom-formtwo").show();
 	$(".true").click(function(){
-		var a=$.trim($(".host-password").val());
-		var b=$.trim($(".guest-password").val());
-		var c=/^[0-9]*$/;
+		var a=$.trim($(".host-passwords").val());
+		var b=$.trim($(".guest-passwords").val());
+
+		var c=/^\d{6}$/;
 		if(!a.match(c)){
-			alert('密码为6到10位纯数字')
+			alert('密码为6位纯数字')
 			return false;
 		}
 		else if(!b.match(c)){
-			alert('密码为6到10位纯数字')
+			alert('密码为6位纯数字')
 			return false;
 		}
-		else if(a.length!==b.length){
+		else if(a.length!==b.length){	
 			alert("密码长度必须一致")
 			return false;
 		}
+		else if(a==b){
+			alert("密码不能一样")}
 		else{
 
 
 
+	var valuesname=$("#meetingroom-departname option:selected").val()
+	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/get-deptsbyname?token='+admin_token+'&departName='+valuesname,function(data){
+		var deptids=data.data[0].id;
 	var values=$("#meeting-room option:selected").val()
 	var host
 	if(values=='全屏主要发言者（单个语音切换布局）'){
@@ -483,26 +503,48 @@ $(".new-meeting").click(function(){
 	else if(values=='较小的主要发言者和最多 21 位其他与会者(1 + 21 布局)'){
 		host='one_main_twentyone_pips'
 	}
-}
-	var data={
-		name:$(".meetingroom-name").val(),
-		capacity:$(".meetingroom-count").val(),
-		hostPassword:$(".host-password").val(),
-		guestPassword:$(".guest-password").val(),
-		description:$(".description-input").val(),
-		host_view:host,
+	if((deptids=='')||($(".meetingroom-names").val()=='')||($(".meetingroom-counts").val()=='')||($(".host-passwords").val()=='')||($(".guest-passwords").val()=='')||($(".description-inputs").val()=='')){
+		alert("请填写完整")
 	}
-	
-	// $.ajax({
-	// 	type:'post',
-	// 	data:data,
-	// 	dataType:'json',
-	// 	url:
-	// })
+	else{
 
+
+	var data={
+		token:admin_token,
+		org_id:admin_id,
+		deptId:deptids,
+		name:$(".meetingroom-names").val(),
+		capacity:$(".meetingroom-counts").val(),
+		hostPassword:$(".host-passwords").val(),
+		guestPassword:$(".guest-passwords").val(),
+		description:$(".description-inputs").val(),
+		host_view:host,	
+
+	}
+	// alert(admin_id)
+	// alert(admin_token)
+	// alert(deptids)
+	// alert($(".meetingroom-names").val())
+	// alert($(".meetingroom-counts").val())
+	// alert($(".host-passwords").val())
+	// alert($(".guest-passwords").val())
+	// alert($(".description-inputs").val())
+	// alert(host)
+	$.ajax({
+		type:'post',
+		data:data,
+		dataType:'json',
+		url	: 'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/vmrs',
+		success:function(){
+			location.reload()
+		}
+	})
+	}
+	})
+}
+	})	
 	})
 	
-})
 </script>
 </body>
 </html>

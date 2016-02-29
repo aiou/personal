@@ -37,8 +37,8 @@
 }
 </style>
 <body>
-<div class="head">
-		<div class="head-content" style="height:80px;">
+<div class="head" style="height:72px;">
+		<div class="head-content" >
 			<h1 class="left"><img src="image/logo.png" alt=""></h1>
 			<div class="right">
 				<div>管理员</div>
@@ -148,8 +148,7 @@
 	</div>
 	<div style="position:relative">
 				<span class="add-bgc">会议室号</span>
-				<select name="" id="meetingroom"></select>
-				<span class="can-use">获取可用会议室</span>
+				<span class="meetingroom-number"></span>
 			</div>
 			<div>
 				<span class="add-bgc">会议主题</span>
@@ -174,21 +173,29 @@
 	<div class="form-box">
 	<div>
 				<span class="add-bgces">会议开始时间</span>
-				<input type="text" id="datetime1">
+				<input type="text" id="datetime3">
 				
 			</div>
 	<div>
 			<span class="add-bgces">会议结束时间</span>
-				<input type="text" id="datetime2">	
+				<input type="text" id="datetime4">	
 	</div>
 	<div style="position:relative">
 				<span class="add-bgc">会议室号</span>
 				<select name="" id="meetingroom"></select>
 				<span class="can-use">获取可用会议室</span>
 			</div>
+
+	<div>
+			<span class="add-bgc">会议类型</span>
+			<select name="" id="meetingtype">
+				<option value="即时会议">即时会议</option>
+				<option value="预约会议">预约会议</option>
+			</select>	
+	</div>
 			<div>
 				<span class="add-bgc">会议主题</span>
-				<input type="text" placeholder=" 请输入主题" class="meeting-topic">
+				<input type="text" placeholder=" 请输入主题" class="meeting-topics">
 			</div>
 	<!-- 		<div>
 				<span class="add-bgc">参会人数</span>
@@ -309,37 +316,48 @@ function getJSONData(pn) {
        if (pageTotal == 1){
         var pagelength=$(".sursors").length;
           $('.editored').click(function(){
- 			$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings?token='+admin_token,function(data){
-       		var departmentcount=data.data.length
-       		html='';
-       		for (var i = 0; i <departmentcount; i++) {
+ 			// $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings?token='+admin_token,function(data){
+    //    		var departmentcount=data.data.length
+    //    		html='';
+    //    		for (var i = 0; i <departmentcount; i++) {
        			
-       			html+='<option value="'+data.data[i].meetingRoomNum+'">'+data.data[i].meetingRoomNum+'</option>'
-       		};
-       		$('#meetingroom').append(html)
-       	})
+    //    			html+='<option value="'+data.data[i].meetingRoomNum+'">'+data.data[i].meetingRoomNum+'</option>'
+    //    		};
+    //    		$('#meetingroom').append(html)
+    //    	})
           	var i=$(this).parent().parent().index();
             $("#datetime1").datetimepicker();
           	$("#datetime2").datetimepicker();
           	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings?token='+admin_token, function(data) { 
           	 	var  meetingid=data.data[i].id;
           	 	var  ss=data.data[i].meetingRoomNum;
-          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings/'+meetingid+'?token='+admin_token,function(data){
-          	 		// var descrip=data.data.description;
-          	 		var bT=data.data.beginTime;
-          	 		var eT=data.data.endTime;
-          	 		var mN=data.data.meetingName;
-
+          	 	var bT=data.data[i].beginTime;
+          	 	var eT=data.data[i].endTime;
+          	 	var mN=data.data[i].meetingName;
           	 			$("#datetime1").val(bT)
 	          	 		$("#datetime2").val(eT)
 	          	 		$(".meeting-topic").val(mN)
-	          	 		// $(".description-input").val(descrip)
-	          	 		for(var i=0;i<$("#meetingroom option").length;i++) {  
-				            if($("#meetingroom option").eq(i).val() == ss) {   	
-				                $("#meetingroom option").eq(i).attr('selected',true);  
-				                break;  
-				            }  
-				        } 
+	          	 		$(".meetingroom-number").html(ss)
+
+	       //    	 	$(".can-use").click(function(){
+ 							// var bTs=$("#datetime1").val();
+        //   	 				var eTs=$("#datetime2").val();
+        //   	 				$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/usablevmrs/?beginTime='+bTs+'&endTime='+eTs+'&token='+admin_token,function(data){
+        //   	 						var departmentcount=data.data.length
+       	// 	                        html='';
+       	// 	                        for (var i = 0; i <departmentcount; i++) {
+       			
+       	// 		                    html+='<option value="'+data.data[i]+'">'+data.data[i]+'</option>'
+       	// 	                            };
+       	// 	                        $('#meetingroom').append(html)
+        //   	 				})
+        //   	 		})
+//var valus=$('#meetingroom option:selected').val() 
+// if(values==""){
+//           	 			alert("请填写会议室号")
+//           	 			return false
+//           	 		}
+//           	 		else{
                	 $(".trues").click(function(){
           	 		var valus=$('#meetingroom option:selected').val() 
           	 		var bTs=$("#datetime1").val();
@@ -348,17 +366,17 @@ function getJSONData(pn) {
 									$.ajax({
 										type:"put",
 										dataType:"json",
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices/'+userid+'?token='+admin_token+'&deptId='+dIds+'&displayName='+disn+'&pexipName='+usen+'&pexipPassword='+admin_password+'&description='+dest,
+										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings/'+meetingid+'?token='+admin_token+'&beginTime='+bTs+'&duration=59&endTime='+eTs+'&meetingName='+mNs,
 										success:function(data){
 											alert('编辑成功')
-											$(".bcgs").hide();
-											$(".forms").hide();
+											// $(".bcgs").hide();
+											// $(".forms").hide();
 											location.reload() ;
 										   }
-										})
+										})	
 									})
 				
-          				 })	
+          				
          })
           	 $('.bcgs').show();
              $(".meeting-form").show(); 
@@ -384,15 +402,6 @@ function getJSONData(pn) {
         }
        else{
        		$('.editored').click(function(){
-       			$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings?token='+admin_token,function(data){
-       		var departmentcount=data.data.length
-       		html='';
-       		for (var i = 0; i <departmentcount; i++) {
-       			
-       			html+='<option value="'+data.data[i].meetingRoomNum+'">'+data.data[i].meetingRoomNum+'</option>'
-       		};
-       		$('#meetingroom').append(html)
-       	})
           	var pagecount=($(".current-page").html()-1)*10;
           	var i=$(this).parent().parent().index()+pagecount;
           	$("#datetime1").datetimepicker();
@@ -400,34 +409,22 @@ function getJSONData(pn) {
           	 $.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings?token='+admin_token, function(data) { 
           	 	var  meetingid=data.data[i].id;
           	 	var  ss=data.data[i].meetingRoomNum;
-          	 	$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings/'+meetingid+'?token='+admin_token,function(data){
-          	 		// var descrip=data.data.description;
-          	 		var bT=data.data.beginTime;
-          	 		var eT=data.data.endTime;
-          	 		var mN=data.data.meetingName;
-
+          	 	var bT=data.data[i].beginTime;
+          	 	var eT=data.data[i].endTime;
+          	 	var mN=data.data[i].meetingName;
           	 			$("#datetime1").val(bT)
 	          	 		$("#datetime2").val(eT)
 	          	 		$(".meeting-topic").val(mN)
-	          	 		// $(".description-input").val(descrip)
-	          	 		for(var i=0;i<$("#meetingroom option").length;i++) {  
-				            if($("#meetingroom option").eq(i).val() == ss) {   	
-				                $("#meetingroom option").eq(i).attr('selected',true);  
-				                break;  
-				            }  
-				        } 
-
-          	 	
+	          	 		$(".meetingroom-number").html(ss)
           	 $(".trues").click(function(){
           	 		var valus=$('#meetingroom option:selected').val() 
           	 		var bTs=$("#datetime1").val();
           	 		var eTs=$("#datetime2").val();
           	 		var mNs=$(".meeting-topic").val()
-          	 		alert(bTs)
 									$.ajax({
 										type:"put",
 										dataType:"json",
-										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/devices/'+userid+'?token='+admin_token+'&deptId='+dIds+'&displayName='+disn+'&pexipName='+usen+'&pexipPassword='+admin_password+'&description='+dest,
+										url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings/'+meetingid+'?token='+admin_token+'&beginTime='+bTs+'&duration=59&endTime='+eTs+'&meetingName='+mNs,
 										success:function(data){
 											alert('编辑成功')
 											$(".bcgs").hide();
@@ -437,7 +434,6 @@ function getJSONData(pn) {
 									})
 				
           				 })	
-          			 })
 				})
           	 $('.bcgs').show();
              $(".meeting-form").show(); 
@@ -525,9 +521,84 @@ $(function() {
     clicks()
 }) 
 $(".new-meeting").click(function(){
-	$(".bcgs").show();
-	$(".add-meeting").show()
-})
+			$("#datetime3").datetimepicker();
+			$("#datetime4").datetimepicker();
+			$("#datetime3").datetimepicker('setDate', (new Date()) )
+			$("#datetime4").datetimepicker('setDate', (new Date()) )
+        	$(".bcgs").show();
+			$(".add-meeting").show()
+	         	$(".can-use").click(function(){
+ 							var bTs=$("#datetime3").val();
+          	 				var eTs=$("#datetime4").val();
+          	 				$.getJSON('https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/usablevmrs/?beginTime='+bTs+'&endTime='+eTs+'&token='+admin_token,function(data){
+          	 						var departmentcount=data.data.length
+          	 						if(departmentcount==0){
+          	 							alert("没有可用的会议室")
+          	 							return false
+          	 						}
+          	 						else{
+          	 							    html='';
+       		                        for (var i = 0; i <departmentcount; i++) {
+       			
+       			                    html+='<option value="'+data.data[i]+'">'+data.data[i]+'</option>'
+       		                            };
+       		                        $('#meetingroom').append(html)
+          	 				
+          	 						}
+									})
+       		                    
+          	 		})
+	        
+
+			$(".trues").click(function(){
+				var values=$("#meetingtype option:selected").val()
+				var host
+				if(values=='即时会议'){
+					host=0
+				}
+				else if(values=='预约会议'){
+					host=1
+				}
+				    var meetingrooms=$('#meetingroom option:selected').val()
+				    var meetingtypes=$('#meetingtype option:selected').val()  
+          	 		var bTs=$("#datetime3").val()+':00';
+          	 		var eTs=$("#datetime4").val()+':00';
+          	 		var mNs=$(".meeting-topics").val()
+				if((meetingrooms=='')||(meetingtypes=='')||(mNs=='')){
+					alert("请完善会议信息")
+					return false
+				}
+				else{
+					var data={
+						    org_id:admin_id,
+							meetingRoomNum:meetingrooms,
+							meetingName:mNs,
+							beginTime:bTs,
+							endTime:eTs,
+							duration:59,
+							type:host,
+							token:admin_token,
+
+
+					}
+					$.ajax({
+						type:'post',
+						data:data,
+						dataType:"json",
+						url:'https://api-test.cloudp.cc/cloudpServer/v1/orgs/'+admin_id+'/meetings',
+						success:function(){
+							location.reload();
+						}
+					})
+				}
+			})
+
+
+
+
+
+
+		        })
 </script>
 </body>
 </html>
